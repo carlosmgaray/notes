@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup · Card de Auditoría: dónde va la tarea</title>
+<style>
+:root{
+  --primary:#1D428A;--success:#1F7A4D;--error:#c62828;--warning:#e65100;--secondary:#B7B7B7;
+  --text:rgba(0,0,0,.87);--text-2:rgba(0,0,0,.6);--line:#e5e5e5;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.1);
+  --mk:#101828;--mk-accent:#fbbf24;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:16px/1.5 "Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:#f4f5f7}
+p,h1,h2,h3{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic-solid{fill:currentColor}
+
+/* Mockup chrome */
+.mk-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:8px 14px;background:var(--mk);color:#e5e7eb;font-size:13px;border-bottom:2px solid var(--mk-accent);position:sticky;top:0;z-index:10}
+.mk-pill{background:var(--mk-accent);color:#111;font-weight:700;font-size:11px;letter-spacing:.06em;padding:2px 6px;border-radius:3px}
+.mk-title{font-weight:600;color:#fff}
+.mk-label{color:#9ca3af}
+.mk-seg{display:flex;border:1px solid #374151;border-radius:6px;overflow:hidden}
+.mk-seg button{background:transparent;border:0;border-right:1px solid #374151;padding:5px 10px;color:#d1d5db;white-space:nowrap}
+.mk-seg button:last-child{border-right:0}
+.mk-seg button[aria-pressed="true"]{background:#fff;color:#111;font-weight:600}
+.mk-notes{background:#fffbeb;border-bottom:1px solid #f0dc8c;color:#3f3a23;font-size:13.5px;padding:10px 14px}
+.mk-notes ul{margin:4px 0 0;padding-left:18px}
+.wrap{padding:20px 14px 40px;max-width:1500px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(390px,1fr));gap:28px 20px;align-items:start}
+.opt-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.opt-id{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:13px;background:var(--mk);color:#fff;font-weight:700;font-size:13px;padding:0 8px}
+.opt-id.ref{background:#9ca3af}
+.opt-name{font-weight:700;font-size:15px}
+.opt-desc{font-size:13px;color:#4b5563;margin:0 0 10px;min-height:2.6em}
+.opt-desc b{color:#111}
+.pc{font-size:12.5px;margin-top:10px;color:#374151}
+.pc span{display:block;padding-left:16px;position:relative;margin-top:2px}
+.pc .pro::before{content:"+";position:absolute;left:3px;color:#15803d;font-weight:700}
+.pc .con::before{content:"–";position:absolute;left:3px;color:#b91c1c;font-weight:700}
+.stage{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px}
+.hl{outline:2px dashed #d6336c;outline-offset:3px;border-radius:3px}
+.hl-off .hl{outline:none}
+
+/* App card (same styles as the real inbox card) */
+.card{background:#fff;border-radius:12px;border-left:4px solid #e0e0e0;box-shadow:var(--shadow-sm);padding:16px 16px 22px;transition:all .2s}
+.card:hover{background:#f3f4f6;box-shadow:0 0 0 3px rgba(29,66,138,.45)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card-top>div:first-child{min-width:0}
+.card-title{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:700;line-height:1.25}
+.card-title span.t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.ring{display:inline-flex;padding:2px;border:2px solid;border-radius:50%;font-size:14px;flex:none}
+.card-sub{display:block;font-size:.75rem;color:var(--text-2);line-height:1.66}
+.card-badges{display:flex;align-items:center;gap:8px;flex:none;font-size:16px}
+.state-chip{display:inline-flex;align-items:center;height:22px;border-radius:16px;padding:0 8px;font-size:.75rem;font-weight:600;color:#fff;background:var(--primary);white-space:nowrap}
+.card-op{display:flex;align-items:center;gap:4px;margin-top:8px;font:600 .875rem/1.43 ui-monospace,Consolas,"Courier New",monospace;color:#374151;min-width:0}
+.card-op>.ic{font-size:16px;color:#6b7280}
+.copy{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:0;border-radius:50%;background:none;color:rgba(0,0,0,.54);font-size:14px}
+.card-bottom{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:4px}
+.card-bottom>div:first-child{min-width:0}
+.meta{display:flex;align-items:flex-start;gap:4px;font-size:.875rem;color:var(--text-2)}
+.meta .ic{font-size:16px;color:#6b7280;margin-top:2px}
+.meta .more{cursor:help}
+.due{display:flex;flex-direction:column;align-items:center;gap:2px;flex:none}
+.due-chip{display:inline-flex;align-items:center;height:22px;border-radius:16px;padding:0 8px;font-size:.8125rem;font-weight:500;white-space:nowrap}
+.due-date{font-size:.75rem;color:var(--text-2)}
+
+/* Task placements */
+.eyebrow{display:block;font-size:.6875rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;margin-bottom:3px;overflow-wrap:anywhere}
+.task-chip{display:inline-flex;align-items:center;gap:5px;max-width:100%;margin-top:6px;border-radius:6px;padding:2px 8px 2px 6px;font-size:.75rem;font-weight:600;line-height:1.4}
+.task-chip .ic{font-size:13px}
+.task-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.task-foot{display:flex;align-items:center;gap:6px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line);font-size:.75rem;color:var(--text-2)}
+.task-foot .ic{font-size:14px;color:#6b7280}
+.task-foot b{font-weight:600;color:var(--text)}
+.op-task{display:flex;align-items:center;gap:4px;min-width:0;font:500 .75rem/1.4 "Segoe UI",Roboto,Arial,sans-serif;color:var(--text-2);margin-left:6px;padding-left:8px;border-left:1px solid #d1d5db}
+.op-task span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.op-task .ic{font-size:13px;color:#6b7280;flex:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-file-pen" viewBox="0 0 24 24"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></symbol>
+<symbol id="i-hash" viewBox="0 0 24 24"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-building-2" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></symbol>
+<symbol id="i-thumbs-up" viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></symbol>
+<symbol id="i-thumbs-down" viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></symbol>
+</svg>
+
+<header class="mk-bar">
+  <span class="mk-pill">MOCKUP</span>
+  <span class="mk-title">Card de Auditoría · dónde va la «tarea»</span>
+  <span class="mk-label">Caso de prueba</span>
+  <div class="mk-seg" id="seg-case" role="group"></div>
+  <span class="mk-label">Resaltar lo nuevo</span>
+  <div class="mk-seg" id="seg-hl" role="group">
+    <button data-hl="1" aria-pressed="true">Sí</button>
+    <button data-hl="0" aria-pressed="false">No</button>
+  </div>
+</header>
+<div class="mk-notes">
+  <b>Qué cambia en el card de Auditoría:</b> se elimina «Solicitante» y vuelve a aparecer la tarea (campo <code>type</code>, ej. «Encaminhamento para Área Responsável»). El título sigue siendo <code>title</code>.
+  <ul>
+    <li>Pasá el mouse sobre «+1» para ver el tooltip (departamentos y responsables).</li>
+    <li>Cambiá el «Caso de prueba» para ver cómo se comporta cada opción con título largo, un solo responsable o sin responsable.</li>
+    <li>Lo resaltado con borde punteado rosa es lo nuevo de cada opción.</li>
+  </ul>
+</div>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<script>
+(() => {
+'use strict';
+
+const TONES = {
+  error:   { bg:'#fdecea', text:'#c62828', border:'#e57373' },
+  warning: { bg:'#fff4e5', text:'#e65100', border:'#ffb74d' },
+  info:    { bg:'#eef1f8', text:'#1D428A', border:'#6FA8DC' },
+};
+
+const CASES = [
+  {
+    label:'1 · Título largo, 2 deptos, 2 responsables',
+    title:'Título de testing para departamento backoffice Título de testing para departamento backoffice Título de testing',
+    task:'Encaminhamento para Área Responsável',
+    op:'OP-02-02-261117-00003',
+    departments:['BACKOFFICE','AUDITORIA INTERNA'],
+    responsibles:['JUNIOR.HOMOLOGA','FRANCIELE MARTINS BARBOSA'],
+    tone:'warning', due:'Vence hoje', date:'17/11/2026', up:true,
+  },
+  {
+    label:'2 · Título corto, 1 depto, 1 responsable',
+    title:'Test 938008',
+    task:'Encaminhamento para Área Responsável',
+    op:'OP-02-02-261112-00002',
+    departments:['BACKOFFICE'],
+    responsibles:['JUNIOR.HOMOLOGA'],
+    tone:'error', due:'Vencida há 5 dias', date:'12/11/2026', up:false,
+  },
+  {
+    label:'3 · Sin responsable, tarea larga',
+    title:'Novo apontamento para backoffice',
+    task:'Analisar novo comentário e prazo',
+    op:'OP-02-02-261117-00002',
+    departments:['BACKOFFICE','CONTROLES INTERNOS'],
+    responsibles:[],
+    tone:'info', due:'Vence em 13 dias', date:'30/11/2026', up:true,
+  },
+];
+
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const icon = (n, x='') => `<svg class="ic ${x}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+/* Same pattern as departments: first one + "+N", tooltip with all of them */
+const multi = list => {
+  const [first, ...rest] = list;
+  return rest.length
+    ? `${esc(first)} <span class="more" title="${esc(list.join(', '))}">+${rest.length}</span>`
+    : esc(first);
+};
+
+/* Every variant shares this skeleton; `slots` injects each option's task placement */
+function card(c, slots = {}) {
+  const t = TONES[c.tone];
+  const thumb = c.up
+    ? `<span style="color:${c.tone === 'info' ? '#1F7A4D' : '#e65100'}">${icon('thumbs-up','ic-solid')}</span>`
+    : `<span style="color:#c62828">${icon('thumbs-down','ic-solid')}</span>`;
+  const resp = c.responsibles.length
+    ? `<p class="meta">${icon('user')}<span>Responsável: ${multi(c.responsibles)}</span></p>` : '';
+  return `<div class="card" style="border-left-color:${t.border}">
+    <div class="card-top">
+      <div>
+        ${slots.aboveTitle ?? ''}
+        <p class="card-title"><span class="ring" style="color:${t.text};border-color:${t.border}">${icon('file-pen')}</span><span class="t" title="${esc(c.title)}">${esc(c.title)}</span></p>
+        <span class="card-sub">Gestão Auditoria · Apontamentos de Auditoria</span>
+        ${slots.belowSub ?? ''}
+      </div>
+      <div class="card-badges"><span class="state-chip">ATIVO</span>${thumb}</div>
+    </div>
+    <p class="card-op">${icon('hash')}${c.op}<button class="copy" title="Copiar número da operação">${icon('copy')}</button>${slots.opLine ?? ''}</p>
+    <div class="card-bottom">
+      <div>
+        <p class="meta">${icon('building-2')}<span>${multi(c.departments)}</span></p>
+        ${slots.metaTop ?? ''}
+        ${resp}
+        ${slots.metaBottom ?? ''}
+      </div>
+      <div class="due"><span class="due-chip" style="background:${t.bg};color:${t.text}">${c.due}</span><span class="due-date">${c.date}</span></div>
+    </div>
+    ${slots.footer ?? ''}
+  </div>`;
+}
+
+const solicitante = c => `<p class="meta">${icon('user')}<span>Solicitante: carlos.homologa</span></p>`;
+
+const VARIANTS = [
+  {
+    id:'Hoy', ref:true, name:'Como está ahora (referencia)',
+    desc:'Título nuevo + Solicitante + Responsável. Sin tarea.',
+    render:c => card(c, { metaTop: solicitante(c) }),
+    pros:[], cons:['Es lo que se quiere cambiar: sobra Solicitante y falta la tarea.'],
+  },
+  {
+    id:'A', name:'Etiqueta sobre el título',
+    desc:'La tarea va arriba del título, en mayúsculas chicas y con el color del estado del plazo.',
+    render:(c) => { const t = TONES[c.tone]; return card(c, {
+      aboveTitle:`<span class="eyebrow hl" style="color:${t.text}">${esc(c.task)}</span>`,
+    }); },
+    pros:['Se lee primero, como «tipo de proceso» del título.','No agrega altura al bloque de datos.'],
+    cons:['Compite visualmente con el título, que es lo principal.','Con tareas largas ocupa 2 líneas arriba.'],
+  },
+  {
+    id:'B', name:'Chip bajo el subtítulo',
+    desc:'Un chip con el ícono de la tarea, justo debajo de «Gestão Auditoria · Apontamentos…».',
+    render:(c) => { const t = TONES[c.tone]; return card(c, {
+      belowSub:`<span class="task-chip hl" style="background:${t.bg};color:${t.text}" title="${esc(c.task)}">${icon('clipboard-list')}<span>${esc(c.task)}</span></span>`,
+    }); },
+    pros:['Se distingue como dato propio, no como texto suelto.','Agrupa tarea y contexto (producto) en la cabecera.'],
+    cons:['Cabecera más cargada: título + subtítulo + chip + badge.','Se recorta con puntos suspensivos si la tarea es larga.'],
+  },
+  {
+    id:'C', name:'Línea «Tarefa:» en lugar de Solicitante',
+    desc:'La tarea ocupa el lugar que deja Solicitante, con el mismo estilo que Responsável.',
+    render:c => card(c, {
+      metaTop:`<p class="meta hl">${icon('clipboard-list')}<span>Tarefa: ${esc(c.task)}</span></p>`,
+    }),
+    pros:['Cambio mínimo: mismo patrón de línea con ícono y etiqueta.','Altura del card prácticamente igual a la actual.'],
+    cons:['Una línea de texto más entre las de metadatos; puede pasar desapercibida.','Con tarea larga se parte en 2 líneas dentro de la columna izquierda.'],
+  },
+  {
+    id:'D', name:'Franja inferior «Tarefa atual»',
+    desc:'Pie del card separado por una línea fina, con la tarea a todo el ancho.',
+    render:c => card(c, {
+      footer:`<div class="task-foot hl">${icon('clipboard-list')}<span>Tarefa atual: <b>${esc(c.task)}</b></span></div>`,
+    }),
+    pros:['Ancho completo: la tarea larga nunca se recorta.','Queda claramente separada de los datos de la operación.'],
+    cons:['Agrega ~30px de altura a cada card.','Se aleja del título, que era donde estaba antes.'],
+  },
+  {
+    id:'E', name:'Junto al número de operación',
+    desc:'En la misma línea del nº OP, separada por una barra vertical.',
+    render:c => card(c, {
+      opLine:`<span class="op-task hl" title="${esc(c.task)}">${icon('clipboard-list')}<span>${esc(c.task)}</span></span>`,
+    }),
+    pros:['No agrega ninguna línea: el card mantiene su altura.'],
+    cons:['Queda muy poco ancho: la tarea se corta casi siempre.','Mezcla un identificador (nº OP) con un dato descriptivo.'],
+  },
+];
+
+let caseIdx = 0, highlight = true;
+
+function render() {
+  const c = CASES[caseIdx];
+  document.body.classList.toggle('hl-off', !highlight);
+  document.getElementById('grid').innerHTML = VARIANTS.map(v => `
+    <section>
+      <div class="opt-head"><span class="opt-id ${v.ref ? 'ref' : ''}">${v.id}</span><span class="opt-name">${v.name}</span></div>
+      <p class="opt-desc">${v.desc}</p>
+      <div class="stage">${v.render(c)}</div>
+      <div class="pc">${v.pros.map(p => `<span class="pro">${p}</span>`).join('')}${v.cons.map(p => `<span class="con">${p}</span>`).join('')}</div>
+    </section>`).join('');
+  document.getElementById('seg-case').innerHTML = CASES.map((k, i) =>
+    `<button data-case="${i}" aria-pressed="${i === caseIdx}">${k.label}</button>`).join('');
+  document.querySelectorAll('#seg-hl button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.hl === '1') === highlight)));
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-case],button[data-hl]');
+  if (!b) return;
+  if (b.dataset.case !== undefined) caseIdx = Number(b.dataset.case);
+  if (b.dataset.hl !== undefined) highlight = b.dataset.hl === '1';
+  render();
+});
+
+render();
+})();
+</script>
+</body>
+</html>
