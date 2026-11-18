@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup · Editar apontamento (Auditoría)</title>
+<style>
+:root{
+  --primary:#1D428A;--primary-dark:#163368;--success:#1F7A4D;--error:#c62828;--warning:#e65100;--secondary:#B7B7B7;--info:#0288d1;
+  --text:rgba(0,0,0,.87);--text-2:rgba(0,0,0,.6);--divider:rgba(0,0,0,.12);--line:#e5e5e5;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.1);
+  --mk:#101828;--mk-accent:#fbbf24;--new:#d6336c;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:16px/1.5 "Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:#f4f5f7}
+p,h1,h2,h3,h4{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+[hidden]{display:none!important}
+
+/* ---------- Mockup chrome ---------- */
+.mk-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:8px 14px;background:var(--mk);color:#e5e7eb;font-size:13px;border-bottom:2px solid var(--mk-accent);position:sticky;top:0;z-index:50}
+.mk-pill{background:var(--mk-accent);color:#111;font-weight:700;font-size:11px;letter-spacing:.06em;padding:2px 6px;border-radius:3px}
+.mk-title{font-weight:600;color:#fff}
+.mk-label{color:#9ca3af}
+.mk-seg{display:flex;border:1px solid #374151;border-radius:6px;overflow:hidden}
+.mk-seg button{background:transparent;border:0;border-right:1px solid #374151;padding:5px 12px;color:#d1d5db;white-space:nowrap}
+.mk-seg button:last-child{border-right:0}
+.mk-seg button[aria-pressed="true"]{background:#fff;color:#111;font-weight:600}
+.mk-spacer{flex:1}
+.mk-notes{background:#fffbeb;border-bottom:1px solid #f0dc8c;color:#3f3a23;font-size:13.5px;padding:10px 14px}
+.mk-notes ul{margin:4px 0 0;padding-left:18px}
+.wrap{padding:20px 14px 48px;max-width:1500px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:30px 22px;align-items:start}
+.opt-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.opt-id{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:13px;background:var(--mk);color:#fff;font-weight:700;font-size:13px;padding:0 8px}
+.opt-name{font-weight:700;font-size:15px}
+.opt-desc{font-size:13px;color:#4b5563;margin:0 0 10px}
+.pc{font-size:12.5px;margin-top:10px;color:#374151}
+.pc span{display:block;padding-left:16px;position:relative;margin-top:2px}
+.pc .pro::before{content:"+";position:absolute;left:3px;color:#15803d;font-weight:700}
+.pc .con::before{content:"–";position:absolute;left:3px;color:#b91c1c;font-weight:700}
+.stage{background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}
+.hl{outline:2px dashed var(--new);outline-offset:3px;border-radius:3px;position:relative}
+.hl-off .hl{outline:none}
+
+/* ---------- Detail (mock of the real pane) ---------- */
+.detail{padding:12px}
+.dh{display:flex;align-items:flex-start;gap:8px;padding:6px 4px 10px}
+.dh-left{display:flex;align-items:center;gap:4px;flex:none}
+.dh-actions{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;padding-top:3px}
+.dh-row{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.dh-docs{margin-right:auto}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:0;border-radius:50%;background:none;font-size:20px;color:rgba(0,0,0,.54);flex:none;position:relative}
+.icon-btn:hover{background:rgba(0,0,0,.05)}
+.icon-btn.lg{font-size:30px;width:46px;height:46px}
+.icon-btn.sm{width:26px;height:26px;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:64px;padding:5px 15px;border:1px solid transparent;border-radius:4px;background:none;font-size:.8125rem;font-weight:500;line-height:1.75;letter-spacing:.02857em;text-transform:uppercase;white-space:nowrap}
+.btn .ic{font-size:18px}
+.btn-contained{background:var(--primary);color:#fff;padding:6px 16px;box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px rgba(0,0,0,.14),0 1px 5px rgba(0,0,0,.12)}
+.btn-contained:hover{background:var(--primary-dark)}
+.btn-contained.danger{background:var(--error)}
+.btn-contained:disabled{background:rgba(0,0,0,.12);color:rgba(0,0,0,.26);box-shadow:none;cursor:not-allowed}
+.btn-outlined{border-color:rgba(29,66,138,.5);color:var(--primary)}
+.btn-outlined:hover{background:rgba(29,66,138,.04);border-color:var(--primary)}
+.btn-outlined.danger{border-color:rgba(198,40,40,.5);color:var(--error)}
+.btn-outlined.plain{font-weight:400}
+.btn-text{color:var(--primary);padding:4px 8px;font-size:.8125rem}
+.btn-text:hover{background:rgba(29,66,138,.06)}
+.btn.round{border-radius:8px}
+.menu{position:absolute;top:calc(100% + 4px);right:0;z-index:10;min-width:210px;background:#fff;border-radius:4px;text-align:left;box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;text-align:left;padding:10px 16px;font-size:.875rem}
+.menu button:hover{background:#f5f5f5}
+.menu .ic{font-size:16px;color:#6b7280}
+.menu hr{border:0;border-top:1px solid var(--divider);margin:4px 0}
+.anchor{position:relative}
+.summary{display:flex;gap:16px;border-radius:4px;box-shadow:var(--shadow-sm);padding:14px 16px 18px;margin-bottom:12px}
+.summary-main{flex:2;min-width:0;display:flex;gap:12px;align-items:flex-start}
+.task-box{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:#eef1f8;color:var(--primary);font-size:20px;flex:none}
+.summary h2{font-size:1.15rem;font-weight:700;line-height:1.25;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.state-chip{display:inline-flex;align-items:center;height:22px;border-radius:16px;padding:0 8px;font-size:.75rem;font-weight:600;color:#fff;background:var(--primary)}
+.summary-sub{font-size:.8125rem;color:var(--text-2)}
+.summary-op{font:600 .8125rem ui-monospace,Consolas,monospace;color:#374151;margin-top:2px}
+.summary-side{flex:1;display:flex;flex-direction:column;gap:6px}
+.kv span{display:block;font-size:.75rem;color:var(--text-2);line-height:1.4}
+.kv b{display:block;font-size:.8125rem;font-weight:500}
+.tab-list{display:flex;border-bottom:1px solid var(--divider);padding:0 8px}
+.tab{padding:8px 16px;border:0;background:none;color:var(--text-2);font-size:14px}
+.tab[aria-selected="true"]{color:var(--text);font-weight:500;border-bottom:2px solid var(--primary)}
+.paper{margin:12px 8px 8px;border-radius:4px;box-shadow:var(--shadow-sm);padding:12px;border-left:4px solid #6FA8DC}
+.paper-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;min-height:30px}
+.paper-title{font-size:1rem;font-weight:700}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 16px;margin:0;font-size:.875rem}
+.fields .full{grid-column:1/-1}
+.fields dt{font-weight:500}
+.fields dd{margin:0;color:rgba(0,0,0,.55)}
+
+/* ---------- Dialog / form ---------- */
+.backdrop{background:rgba(0,0,0,.5);padding:24px 16px;display:flex;justify-content:center}
+.dialog{position:relative;width:100%;max-width:760px;background:#fff;border:1px solid #c7d2e0;border-radius:12px;box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)}
+.dialog-close{position:absolute;top:8px;right:8px;color:#9e9e9e}
+.dialog-title{display:flex;align-items:center;gap:8px;padding:16px 56px 4px 24px;font-size:1.25rem;font-weight:700;line-height:1.6}
+.dialog-title .ic{font-size:20px;color:var(--primary)}
+.dialog-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 24px 8px;font-size:.8125rem;color:var(--text-2)}
+.dialog-meta .op{font:600 .8125rem ui-monospace,Consolas,monospace;color:#374151}
+.dialog-body{padding:8px 24px 20px}
+.alert{border-radius:8px;padding:8px 12px;margin-bottom:14px;font-size:.875rem;line-height:1.43;background:#eef1f8;border:1px solid rgba(29,66,138,.2);color:var(--primary)}
+.alert.warning{background:#fff4e5;border-color:#ffd9a8;color:#663c00}
+.stack{display:flex;flex-direction:column;gap:14px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.fgrid .full{grid-column:1/-1}
+.fi{display:flex;flex-direction:column;min-width:0;position:relative;padding-left:0;border-left:3px solid transparent;transition:border-color .15s,background .15s}
+.fi.changed{border-left-color:#f59e0b;background:#fffbeb;padding-left:8px;border-radius:4px}
+.fi>label,.fi>.lbl{display:flex;align-items:center;gap:8px;font-size:.875rem;color:#000;margin-bottom:4px}
+.opt{color:var(--text-2);font-size:.75rem}
+.tag-changed{display:none;font-size:.6875rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#92400e;background:#fde68a;border-radius:4px;padding:0 6px}
+.fi.changed .tag-changed{display:inline}
+.undo{display:none;margin-left:auto;border:0;background:none;color:var(--primary);font-size:.75rem;padding:0;align-items:center;gap:3px}
+.undo:hover{text-decoration:underline}
+.fi.changed .undo{display:inline-flex}
+.inp{width:100%;height:40px;border:1px solid rgba(0,0,0,.23);border-radius:8px;padding:0 14px;background:#fff;outline:0}
+textarea.inp{height:auto;padding:8.5px 14px;resize:vertical;line-height:1.4375}
+.inp:focus{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.inp:disabled{background:#f5f5f5;color:rgba(0,0,0,.45)}
+.counter{align-self:flex-start;font-size:.75rem;color:var(--text-2);margin:3px 14px 0}
+.radios{display:flex;gap:20px;height:40px;align-items:center}
+.radios label{display:inline-flex;align-items:center;gap:6px;font-size:.9375rem;margin:0}
+.radios input{accent-color:var(--primary);width:18px;height:18px;margin:0}
+.section{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin:6px 0 -4px;padding-top:10px;border-top:1px solid var(--line)}
+.section:first-child{border-top:0;padding-top:0;margin-top:0}
+.reason{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.dialog-actions{display:flex;align-items:center;gap:8px;padding:14px 24px;border-top:1px solid #e5e7eb}
+.dialog-actions .grow{flex:1;font-size:.8125rem;color:var(--text-2)}
+.dialog-actions .grow b{color:#92400e}
+.steps{display:flex;gap:8px;align-items:center;padding:0 24px 8px;font-size:.8125rem;color:#6b7280}
+.steps .s{display:inline-flex;align-items:center;gap:6px}
+.steps .n{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#e5e7eb;color:#374151;font-size:.75rem;font-weight:700}
+.steps .s.on{color:var(--text);font-weight:600}
+.steps .s.on .n{background:var(--primary);color:#fff}
+.steps .sep{flex:0 0 28px;height:1px;background:#d1d5db}
+table.diff{width:100%;border-collapse:collapse;font-size:.875rem}
+table.diff th{text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:#6b7280;padding:6px 10px;border-bottom:1px solid var(--line)}
+table.diff td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top;overflow-wrap:anywhere}
+table.diff td:first-child{font-weight:600;white-space:nowrap}
+.old{color:#9a3412;background:#fff1e6;border-radius:4px;padding:1px 6px;text-decoration:line-through;text-decoration-color:rgba(154,52,18,.5)}
+.new{color:#166534;background:#e8f7ee;border-radius:4px;padding:1px 6px}
+.empty{color:#6b7280;font-style:italic}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-refresh-ccw" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+<symbol id="i-file-text" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+<symbol id="i-clipboard-check" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+<symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+</svg>
+
+<header class="mk-bar">
+  <span class="mk-pill">MOCKUP</span>
+  <span class="mk-title">Editar apontamento · solo Auditoría</span>
+  <div class="mk-seg" id="seg-part" role="group">
+    <button data-part="1" aria-pressed="true">1 · Dónde va el botón</button>
+    <button data-part="2" aria-pressed="false">2 · Cómo se ve el modal</button>
+  </div>
+  <span class="mk-spacer"></span>
+  <span class="mk-label">Resaltar lo nuevo</span>
+  <div class="mk-seg" id="seg-hl" role="group">
+    <button data-hl="1" aria-pressed="true">Sí</button>
+    <button data-hl="0" aria-pressed="false">No</button>
+  </div>
+</header>
+
+<div class="mk-notes" id="notes"></div>
+
+<main class="wrap">
+  <section id="part1" class="grid"></section>
+  <section id="part2" hidden>
+    <div class="mk-seg" id="seg-modal" role="group" style="display:inline-flex;margin-bottom:14px;border-color:#cbd5e1">
+      <button data-modal="A" aria-pressed="true" style="color:#111">A · Formulario simple</button>
+      <button data-modal="B" aria-pressed="false" style="color:#111">B · Con motivo</button>
+      <button data-modal="C" aria-pressed="false" style="color:#111">C · Dos pasos con comparación</button>
+    </div>
+    <div id="modal-desc" class="opt-desc"></div>
+    <div class="stage"><div class="backdrop" id="modal-host"></div></div>
+    <div class="pc" id="modal-pc"></div>
+  </section>
+</main>
+
+<script>
+(() => {
+'use strict';
+
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const icon = (n) => `<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+/* =============== PART 1 · button placement =============== */
+const PARTS_NOTES = {
+  1: `<b>Dónde puede ir el botón «Editar».</b> Se muestra solo si el usuario es de Auditoría Interna (o administrador) y la operación es del flujo de Auditoría.
+      <ul><li>La barra de acciones ya está apretada en pantallas de 1366px (ver medición en <code>04-pantallas.md</code>): las opciones cambian cuánto empujan a las otras.</li>
+      <li>Los bordes punteados rosa marcan lo nuevo de cada opción. En D, hacé clic en «⋮» para abrir/cerrar el menú.</li></ul>`,
+  2: `<b>Cómo puede verse el modal de edición.</b> Mismos campos del formulario «Novo apontamento» pero ya cargados con los valores actuales. Los campos son de ejemplo y <b>cuáles son editables todavía no está confirmado</b>.
+      <ul><li>Probalo: cambiá cualquier campo y mirá cómo se marca, cómo se habilita «Salvar» y cómo funciona «Desfazer» por campo.</li>
+      <li>El nº de operación, el producto y el estado aparecen de solo lectura en la cabecera: no se editan.</li></ul>`,
+};
+
+function detail(v) {
+  const edit = {
+    A: `<button class="btn btn-outlined hl">${icon('pencil')}Editar</button>`,
+  };
+  const kebab = v === 'D' ? `<span class="anchor hl" style="align-self:center">
+      <button class="icon-btn" data-kebab aria-label="Mais ações">${icon('more')}</button>
+      <div class="menu" data-menu><button>${icon('pencil')}Editar apontamento</button><hr><button>${icon('history')}Ver histórico</button></div>
+    </span>` : '';
+  const paperBtn = v === 'C' ? `<button class="btn btn-text hl">${icon('pencil')}Editar dados</button>` : '';
+  const pencilIcon = v === 'B' ? `<button class="icon-btn hl" title="Editar apontamento" aria-label="Editar apontamento">${icon('pencil')}</button>` : '';
+  return `<div class="detail">
+    <div class="dh">
+      <div class="dh-left">
+        <button class="icon-btn lg" aria-label="Fechar">${icon('x')}</button>
+        <button class="icon-btn" title="Atualizar operação">${icon('refresh-ccw')}</button>
+        ${pencilIcon}
+      </div>
+      <div class="dh-actions">
+        <div class="dh-row">
+          <button class="btn btn-outlined plain dh-docs">${icon('file-text')}Ver documentos</button>
+          ${edit[v] ?? ''}
+          <button class="btn btn-contained">Registrar ciência</button>
+          ${kebab}
+        </div>
+        <div class="dh-row">
+          <button class="btn btn-outlined danger">Dar baixa</button>
+          <button class="btn btn-outlined">Concluir</button>
+        </div>
+      </div>
+    </div>
+    <div class="summary">
+      <div class="summary-main">
+        <div class="task-box">${icon('clipboard-check')}</div>
+        <div style="min-width:0">
+          <h2>Conciliações bancárias sem revisão independente <span class="state-chip">ABERTO</span></h2>
+          <p class="summary-sub">Gestão Auditoria › Apontamentos de Auditoria</p>
+          <p class="summary-op"># OP-02-02-261117-00003</p>
+        </div>
+      </div>
+      <div class="summary-side">
+        <div class="kv"><span>Data de criação</span><b>17/11/2026 09:32</b></div>
+        <div class="kv"><span>Área</span><b>Auditoria Interna</b></div>
+      </div>
+    </div>
+    <div class="tab-list"><button class="tab" aria-selected="true">Resumo</button><button class="tab" aria-selected="false">Rastreamento</button></div>
+    <div class="paper">
+      <div class="paper-head"><p class="paper-title">Informações da operação</p>${paperBtn}</div>
+      <dl class="fields">
+        <div><dt>Nome do relatório</dt><dd>Auditoria de Processos de Tesouraria</dd></div>
+        <div><dt>Nº do relatório</dt><dd>014/2026</dd></div>
+        <div><dt>Classificação do risco</dt><dd>Médio</dd></div>
+        <div class="full"><dt>Descrição</dt><dd>As conciliações das contas correntes são elaboradas e aprovadas pelo mesmo analista…</dd></div>
+        <div><dt>Prazo</dt><dd>15/12/2026</dd></div>
+        <div><dt>Área responsável</dt><dd>Tesouraria</dd></div>
+        <div><dt>Responsável da área</dt><dd>Ana Costa</dd></div>
+      </dl>
+    </div>
+  </div>`;
+}
+
+const PLACEMENTS = [
+  { id:'A', name:'Botón en la barra de acciones', desc:'«Editar» como botón con borde, al lado de «Ver documentos».',
+    pros:['Siempre visible y fácil de encontrar.','Mismo patrón que «Ver documentos» (botón con ícono).'],
+    cons:['Suma un botón a una barra que ya se desborda en 1366px: puede agregar una fila más.','Se mezcla con las acciones de la tarea, que son otra cosa (flujo), no edición de datos.'] },
+  { id:'B', name:'Ícono de lápiz junto a cerrar y actualizar', desc:'Un ícono en el grupo izquierdo del encabezado, con tooltip «Editar apontamento».',
+    pros:['No ocupa espacio en la barra de botones.','Separa visualmente la edición de las acciones del flujo.'],
+    cons:['Un ícono solo es menos descubrible (depende del tooltip).','Está lejos de los datos que se van a editar.'] },
+  { id:'C', name:'Botón «Editar dados» en la tarjeta de información', desc:'Dentro de «Informações da operação», alineado a la derecha del título de la tarjeta.',
+    pros:['Contextual: queda al lado de los datos que cambia.','No toca la barra de acciones.','Sirve para la pestaña «Resumo» tal como está.'],
+    cons:['Solo se ve en la pestaña «Resumo»; en «Rastreamento» no aparece.','Es el botón que más se separa del resto de las acciones.'] },
+  { id:'D', name:'Menú «⋮» (más acciones)', desc:'Un menú con «Editar apontamento» y espacio para futuras acciones secundarias.',
+    pros:['Cero impacto en el ancho de la barra.','Escala si después se suman otras acciones secundarias.'],
+    cons:['La acción queda escondida: dos clics para llegar.','Agrega un componente nuevo (menú) que hoy el encabezado no tiene.'] },
+];
+
+function renderPart1() {
+  document.getElementById('part1').innerHTML = PLACEMENTS.map(p => `
+    <section>
+      <div class="opt-head"><span class="opt-id">${p.id}</span><span class="opt-name">${p.name}</span></div>
+      <p class="opt-desc">${p.desc}</p>
+      <div class="stage">${detail(p.id)}</div>
+      <div class="pc">${p.pros.map(x => `<span class="pro">${x}</span>`).join('')}${p.cons.map(x => `<span class="con">${x}</span>`).join('')}</div>
+    </section>`).join('');
+}
+
+/* =============== PART 2 · edit modal =============== */
+const DEPTS = { auditoria:'Auditoria Interna', tesouraria:'Tesouraria', ti:'Tecnologia da Informação', credito:'Crédito', operacoes:'Operações', compliance:'Compliance', juridico:'Jurídico' };
+const FIELDS = [
+  { sec:'Relatório' },
+  { k:'reportName', l:'Nome do relatório', t:'text', v:'Auditoria de Processos de Tesouraria' },
+  { k:'reportNumber', l:'Nº do relatório', t:'text', v:'014/2026' },
+  { k:'pointType', l:'Tipo de ponto', t:'radio', o:['Novo','Seguimento'], v:'Novo' },
+  { k:'systemDependent', l:'Depende de sistema', t:'radio', o:['Sim','Não'], v:'Não' },
+  { sec:'Apontamento' },
+  { k:'title', l:'Título', t:'text', v:'Conciliações bancárias sem revisão independente', max:150, full:true },
+  { k:'description', l:'Descrição', t:'area', v:'As conciliações das contas correntes são elaboradas e aprovadas pelo mesmo analista, sem evidência de revisão por um segundo responsável.', max:1000, full:true },
+  { k:'recommendation', l:'Recomendação', t:'area', v:'Instituir a revisão independente das conciliações mensais e manter o registro da aprovação.', full:true },
+  { k:'initialComment', l:'Comentário inicial', t:'area', v:'Apontamento identificado durante a auditoria de setembro.', full:true },
+  { k:'actionPlan', l:'Plano de ação', t:'area', v:'Revisão por um segundo analista a partir de janeiro/2027.', full:true },
+  { k:'deadline', l:'Prazo', t:'date', v:'2026-12-15' },
+  { k:'riskRating', l:'Classificação do risco', t:'select', o:[['Alto','Alto'],['Médio','Médio'],['Baixo','Baixo']], v:'Médio' },
+  { sec:'Área responsável' },
+  { k:'department', l:'Área responsável', t:'select', o:Object.entries(DEPTS).filter(([id]) => id !== 'auditoria'), v:'tesouraria' },
+  { k:'owner', l:'Responsável da área', t:'text', v:'Ana Costa' },
+  { k:'secondDepartment', l:'2ª área responsável', t:'select', o:[['','Nenhuma'],...Object.entries(DEPTS).filter(([id]) => id !== 'auditoria')], v:'', optional:true },
+  { k:'secondOwner', l:'Responsável da 2ª área', t:'text', v:'', optional:true },
+];
+const FIELD_MAP = Object.fromEntries(FIELDS.filter(f => f.k).map(f => [f.k, f]));
+const MIN_REASON = 30;
+
+const display = (f, value) => {
+  if (value === '' || value == null) return '<span class="empty">vazio</span>';
+  if (f.t === 'select') return esc((f.o.find(o => o[0] === value) || [,value])[1]);
+  if (f.t === 'date') return esc(value.split('-').reverse().join('/'));
+  return esc(value);
+};
+
+function fieldHtml(f, values) {
+  if (f.sec) return `<p class="section full">${f.sec}</p>`;
+  const v = values[f.k];
+  let control = '';
+  if (f.t === 'text') control = `<input class="inp" name="${f.k}" value="${esc(v)}" ${f.max ? `maxlength="${f.max}"` : ''}>${f.max ? `<span class="counter" data-counter="${f.k}">${v.length}/${f.max}</span>` : ''}`;
+  if (f.t === 'date') control = `<input class="inp" type="date" name="${f.k}" value="${esc(v)}">`;
+  if (f.t === 'area') control = `<textarea class="inp" name="${f.k}" rows="2" ${f.max ? `maxlength="${f.max}"` : ''}>${esc(v)}</textarea>${f.max ? `<span class="counter" data-counter="${f.k}">${v.length}/${f.max}</span>` : ''}`;
+  if (f.t === 'select') control = `<select class="inp" name="${f.k}">${f.o.map(([val, text]) => `<option value="${esc(val)}" ${val === v ? 'selected' : ''}>${esc(text)}</option>`).join('')}</select>`;
+  if (f.t === 'radio') control = `<div class="radios">${f.o.map(o => `<label><input type="radio" name="${f.k}" value="${o}" ${o === v ? 'checked' : ''}>${o}</label>`).join('')}</div>`;
+  const lblTag = f.t === 'radio' ? 'span class="lbl"' : `label`;
+  const lblEnd = f.t === 'radio' ? 'span' : 'label';
+  return `<div class="fi ${f.full ? 'full' : ''}" data-field="${f.k}">
+    <${lblTag}>${f.l}${f.optional ? ' <span class="opt">(opcional)</span>' : ''}<span class="tag-changed">alterado</span><button type="button" class="undo" data-undo="${f.k}">${icon('rotate-ccw')}Desfazer</button></${lblEnd}>
+    ${control}
+  </div>`;
+}
+
+const MODALS = {
+  A: { desc:'<b>Formulario simple.</b> Igual al de creación pero con los valores cargados. «Salvar alterações» se habilita solo si hay cambios; los campos modificados se marcan y se pueden deshacer uno a uno.',
+    pros:['Cambio mínimo: reutiliza el formulario de creación casi tal cual.','Rápido para correcciones chicas (un typo, un prazo).'],
+    cons:['No queda registrado por qué se editó (el historial de comentarios es solo de agregado, D-8).','Un clic guarda cambios sobre un apontamento ya en curso, sin revisión final.'] },
+  B: { desc:'<b>Con motivo obligatorio.</b> Igual que A, pero pide «Motivo da alteração» (mínimo 30 caracteres, como en «Dar baixa»). El motivo se registra como comentario en la operación.',
+    pros:['Deja trazabilidad: el área responsable puede ver qué se corrigió y por qué.','Mismo patrón que ya usan las bajas y cambios de estado.'],
+    cons:['Fricción extra para correcciones triviales.','Hay que confirmar con backend si el endpoint de edición acepta/registra un motivo.'] },
+  C: { desc:'<b>Dos pasos con comparación.</b> Paso 1: editar. Paso 2: tabla «Antes → Depois» con solo lo que cambió, más el motivo, y recién ahí se guarda.',
+    pros:['Más seguro: se ve exactamente qué se va a modificar antes de guardar.','Útil si editar el área responsable o el prazo afecta a otras personas.'],
+    cons:['Es lo más costoso de construir (paso extra + lógica de comparación).','Más clics para ediciones simples.'] },
+};
+
+function mountModal(kind) {
+  const host = document.getElementById('modal-host');
+  const orig = Object.fromEntries(FIELDS.filter(f => f.k).map(f => [f.k, f.v]));
+  const state = { values: { ...orig }, reason: '', step: 1 };
+  const changedKeys = () => Object.keys(orig).filter(k => state.values[k] !== orig[k]);
+  const reasonRequired = kind !== 'A';
+  const reasonOk = () => !reasonRequired || state.reason.trim().length >= MIN_REASON;
+
+  const reasonBlock = () => `<div class="reason">
+    <div class="fi"><label for="reason">Motivo da alteração</label>
+      <textarea class="inp" id="reason" rows="2" placeholder="Explique o que foi corrigido e por quê (mín. ${MIN_REASON} caracteres)">${esc(state.reason)}</textarea>
+      <span class="counter" id="reason-counter">${state.reason.trim().length}/${MIN_REASON} mín.</span>
+    </div></div>`;
+
+  function shell(body, footer, stepsHtml = '') {
+    host.innerHTML = `<div class="dialog" role="dialog" aria-modal="true">
+      <button class="icon-btn dialog-close" aria-label="Fechar">${icon('x')}</button>
+      <h2 class="dialog-title"><span class="hl" style="display:inline-flex;align-items:center;gap:8px">${icon('pencil')}Editar apontamento</span></h2>
+      <div class="dialog-meta"><span class="op"># OP-02-02-261117-00003</span><span>·</span><span>Gestão Auditoria › Apontamentos de Auditoria</span><span class="state-chip">ABERTO</span></div>
+      ${stepsHtml}
+      ${body}
+      <div class="dialog-actions">${footer}</div>
+    </div>`;
+  }
+
+  function renderForm() {
+    const stepsHtml = kind === 'C' ? `<div class="steps"><span class="s on"><span class="n">1</span>Editar</span><span class="sep"></span><span class="s"><span class="n">2</span>Revisar e confirmar</span></div>` : '';
+    shell(`<form class="dialog-body" novalidate onsubmit="return false">
+        <div class="alert hl">Você está editando um apontamento já registrado. ${kind === 'A' ? 'As alterações ficam registradas no histórico.' : 'Informe o motivo: ele fica registrado nos comentários.'}</div>
+        <div class="fgrid">${FIELDS.map(f => fieldHtml(f, state.values)).join('')}</div>
+        ${reasonRequired && kind === 'B' ? reasonBlock() : ''}
+      </form>`,
+      `<span class="grow" id="count"></span>
+       <button class="btn btn-outlined round" data-act="cancel">Cancelar</button>
+       <button class="btn btn-contained round" id="primary" data-act="${kind === 'C' ? 'review' : 'save'}" disabled>${kind === 'C' ? `Revisar alterações ${icon('arrow-right')}` : 'Salvar alterações'}</button>`,
+      stepsHtml);
+    refresh();
+  }
+
+  function renderReview() {
+    const keys = changedKeys();
+    shell(`<div class="dialog-body">
+        <div class="alert warning">Confira as alterações antes de salvar. Só aparecem os campos modificados.</div>
+        <table class="diff"><thead><tr><th>Campo</th><th>Antes</th><th>Depois</th></tr></thead><tbody>
+          ${keys.map(k => `<tr><td>${FIELD_MAP[k].l}</td><td><span class="old">${display(FIELD_MAP[k], orig[k])}</span></td><td><span class="new">${display(FIELD_MAP[k], state.values[k])}</span></td></tr>`).join('')}
+        </tbody></table>
+        ${reasonBlock()}
+      </div>`,
+      `<span class="grow"></span>
+       <button class="btn btn-outlined round" data-act="back">${icon('arrow-left')}Voltar e editar</button>
+       <button class="btn btn-contained round" id="primary" data-act="save" disabled>Confirmar e salvar</button>`,
+      `<div class="steps"><span class="s"><span class="n">1</span>Editar</span><span class="sep"></span><span class="s on"><span class="n">2</span>Revisar e confirmar</span></div>`);
+    refresh();
+  }
+
+  function refresh() {
+    const keys = changedKeys();
+    host.querySelectorAll('.fi[data-field]').forEach(el => el.classList.toggle('changed', keys.includes(el.dataset.field)));
+    const count = host.querySelector('#count');
+    if (count) count.innerHTML = keys.length ? `<b>${keys.length} ${keys.length === 1 ? 'campo alterado' : 'campos alterados'}</b>` : 'Nenhuma alteração';
+    const primary = host.querySelector('#primary');
+    if (!primary) return;
+    if (state.step === 1) primary.disabled = !keys.length || (kind === 'B' && !reasonOk());
+    else primary.disabled = !keys.length || !reasonOk();
+  }
+
+  host.onclick = e => {
+    const undo = e.target.closest('[data-undo]');
+    if (undo) {
+      const k = undo.dataset.undo;
+      state.values[k] = orig[k];
+      host.querySelectorAll(`[name="${k}"]`).forEach(el => { if (el.type === 'radio') el.checked = el.value === orig[k]; else el.value = orig[k]; });
+      const c = host.querySelector(`[data-counter="${k}"]`); if (c) c.textContent = `${orig[k].length}/${FIELD_MAP[k].max}`;
+      refresh(); return;
+    }
+    const act = e.target.closest('[data-act]')?.dataset.act;
+    if (act === 'cancel' || e.target.closest('.dialog-close')) { mountModal(kind); }
+    if (act === 'review') { state.step = 2; renderReview(); }
+    if (act === 'back') { state.step = 1; renderForm(); }
+    if (act === 'save') {
+      host.querySelector('.dialog').insertAdjacentHTML('beforeend', `<div style="position:absolute;inset:0;background:rgba(255,255,255,.92);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px"><div><p style="font-weight:700;font-size:1.1rem">Alterações salvas com sucesso ✔</p><p class="opt-desc" style="margin-top:6px">(simulado) El modal se cierra, el card y el detalle se refrescan.</p><button class="btn btn-outlined round" style="margin-top:12px" data-act="cancel">Reiniciar demo</button></div></div>`);
+    }
+  };
+  host.oninput = e => {
+    const t = e.target;
+    if (t.id === 'reason') {
+      state.reason = t.value;
+      const c = host.querySelector('#reason-counter'); if (c) c.textContent = `${t.value.trim().length}/${MIN_REASON} mín.`;
+      refresh(); return;
+    }
+    if (!t.name) return;
+    state.values[t.name] = t.value;
+    const c = host.querySelector(`[data-counter="${t.name}"]`); if (c) c.textContent = `${t.value.length}/${FIELD_MAP[t.name].max}`;
+    refresh();
+  };
+
+  renderForm();
+  document.getElementById('modal-desc').innerHTML = MODALS[kind].desc;
+  document.getElementById('modal-pc').innerHTML = MODALS[kind].pros.map(x => `<span class="pro">${x}</span>`).join('') + MODALS[kind].cons.map(x => `<span class="con">${x}</span>`).join('');
+}
+
+/* =============== wiring =============== */
+let part = 1, modal = 'A', hl = true;
+function render() {
+  document.body.classList.toggle('hl-off', !hl);
+  document.getElementById('notes').innerHTML = PARTS_NOTES[part];
+  document.getElementById('part1').hidden = part !== 1;
+  document.getElementById('part2').hidden = part !== 2;
+  document.querySelectorAll('#seg-part button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.part) === part)));
+  document.querySelectorAll('#seg-hl button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.hl === '1') === hl)));
+  document.querySelectorAll('#seg-modal button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.modal === modal)));
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-part],button[data-hl],button[data-modal],[data-kebab]');
+  if (!b) return;
+  if (b.dataset.part) part = Number(b.dataset.part);
+  if (b.dataset.hl) hl = b.dataset.hl === '1';
+  if (b.dataset.modal) { modal = b.dataset.modal; mountModal(modal); }
+  if (b.hasAttribute('data-kebab')) { const m = b.parentElement.querySelector('[data-menu]'); m.hidden = !m.hidden; return; }
+  render();
+});
+
+renderPart1();
+mountModal(modal);
+render();
+})();
+</script>
+</body>
+</html>

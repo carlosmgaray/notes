@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup · «Estado da solicitação» en Detalhes (Auditoría)</title>
+<style>
+:root{
+  --primary:#1D428A;--text:rgba(0,0,0,.87);--text-2:rgba(0,0,0,.6);--divider:rgba(0,0,0,.12);--line:#e5e5e5;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.1);
+  --mk:#101828;--mk-accent:#fbbf24;--new:#d6336c;--warn:#e65100;--warn-bg:#fff4e5;--warn-b:#ffb74d;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:16px/1.5 "Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:#f4f5f7}
+p,h1,h2,h3{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* chrome */
+.mk-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:8px 14px;background:var(--mk);color:#e5e7eb;font-size:13px;border-bottom:2px solid var(--mk-accent);position:sticky;top:0;z-index:20}
+.mk-pill{background:var(--mk-accent);color:#111;font-weight:700;font-size:11px;letter-spacing:.06em;padding:2px 6px;border-radius:3px}
+.mk-title{font-weight:600;color:#fff}
+.mk-label{color:#9ca3af}
+.mk-seg{display:flex;border:1px solid #374151;border-radius:6px;overflow:hidden;flex-wrap:wrap}
+.mk-seg button{background:transparent;border:0;border-right:1px solid #374151;padding:5px 10px;color:#d1d5db;white-space:nowrap}
+.mk-seg button:last-child{border-right:0}
+.mk-seg button[aria-pressed="true"]{background:#fff;color:#111;font-weight:600}
+.mk-notes{background:#fffbeb;border-bottom:1px solid #f0dc8c;color:#3f3a23;font-size:13.5px;padding:10px 14px}
+.mk-notes h2{font-size:14px}
+.mk-notes .pc{display:flex;gap:28px;flex-wrap:wrap;margin-top:4px}
+.mk-notes .pc div{min-width:260px;flex:1}
+.mk-notes .pc span{display:block;padding-left:16px;position:relative;margin-top:2px}
+.mk-notes .pro::before{content:"+";position:absolute;left:3px;color:#15803d;font-weight:700}
+.mk-notes .con::before{content:"–";position:absolute;left:3px;color:#b91c1c;font-weight:700}
+.stage-wrap{padding:16px;display:flex;justify-content:center}
+.stage{background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;transition:width .2s}
+.hl{outline:2px dashed var(--new);outline-offset:3px;border-radius:4px}
+.hl-off .hl{outline:none}
+
+/* detail mock */
+.detail{padding:12px}
+.dh{display:flex;align-items:center;gap:6px;padding:4px 4px 10px}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:0;border-radius:50%;background:none;font-size:20px;color:rgba(0,0,0,.54)}
+.icon-btn.lg{font-size:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:5px 15px;border:1px solid rgba(29,66,138,.5);border-radius:4px;background:none;color:var(--primary);font-size:.8125rem;font-weight:500;text-transform:uppercase;letter-spacing:.02857em}
+.btn .ic{font-size:18px}
+.btn-contained{background:var(--primary);border-color:var(--primary);color:#fff}
+.spacer{flex:1}
+.summary{display:flex;gap:16px;flex-wrap:wrap;border-radius:4px;box-shadow:var(--shadow-sm);padding:14px 16px 18px;margin-bottom:12px}
+.summary-main{flex:2 1 22rem;min-width:0;display:flex;gap:12px;align-items:flex-start}
+.task-box{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:#eef1f8;color:var(--primary);font-size:20px;flex:none}
+.summary h2{font-size:1.2rem;font-weight:700;line-height:1.3;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.state-chip{display:inline-flex;align-items:center;height:22px;border-radius:16px;padding:0 8px;font-size:.75rem;font-weight:600;color:#fff;background:var(--primary);white-space:nowrap}
+.summary-sub{font-size:.8125rem;color:var(--text-2)}
+.summary-op{font:600 .8125rem ui-monospace,Consolas,monospace;color:#374151;margin-top:2px}
+.task-chip{display:inline-flex;align-items:center;gap:5px;margin-top:6px;border-radius:6px;padding:2px 8px 2px 6px;font-size:.75rem;font-weight:600;background:var(--warn-bg);color:var(--warn)}
+.due-banner{display:inline-flex;align-items:center;gap:8px;margin-top:10px;border-radius:6px;padding:6px 12px;font-size:.8125rem;font-weight:500;background:var(--warn-bg);color:var(--warn)}
+.summary-side{flex:1 1 12rem;display:flex;flex-direction:column;gap:6px}
+.kv span{display:block;font-size:.75rem;color:var(--text-2);line-height:1.4}
+.kv b{display:block;font-size:.8125rem;font-weight:500}
+.tab-list{display:flex;border-bottom:1px solid var(--divider);padding:0 8px}
+.tab{padding:8px 16px;border:0;background:none;color:var(--text-2);font-size:14px}
+.tab[aria-selected="true"]{color:var(--text);font-weight:500;border-bottom:2px solid var(--primary)}
+.panel{padding:12px 8px}
+.resumo{display:flex;gap:16px;align-items:flex-start}
+.resumo.vertical{flex-direction:column;align-items:stretch}
+.paper{border-radius:4px;box-shadow:var(--shadow-sm);padding:12px;border-left:4px solid var(--warn-b);background:#fff}
+.info{flex:2 1 0;min-width:0}
+.paper-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.paper-title{font-size:1rem;font-weight:700}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 16px;margin:0;font-size:.875rem}
+.fields .full{grid-column:1/-1}
+.fields .half{grid-column:span 2}
+.fields dt{font-weight:500}
+.fields dd{margin:0;color:rgba(0,0,0,.55);overflow-wrap:anywhere}
+.risk{display:inline-flex;align-items:center;gap:5px;color:#1F7A4D}
+.risk::before{content:"";width:7px;height:7px;border-radius:50%;background:#1F7A4D}
+
+/* status variants */
+.status-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;cursor:pointer;border-left-color:var(--primary);padding:20px 12px}
+.status-card:hover,.status-strip:hover,.status-inline:hover,.status-mini:hover{background:#f9fafb}
+.status-title{font-size:1.15rem;font-weight:500}
+.status-count{font-size:2rem;line-height:1.2}
+.status-link{display:inline-flex;align-items:center;gap:2px;font-size:.75rem;font-weight:500;color:var(--primary);white-space:nowrap}
+.side-full{flex:1 1 0}
+.side-narrow{flex:0 0 190px;padding:14px 10px}
+.side-narrow .status-title{font-size:.95rem}
+.side-narrow .status-count{font-size:1.5rem}
+.status-strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;cursor:pointer;border-left-color:var(--primary);padding:10px 14px}
+.status-strip .status-title{font-size:.95rem;font-weight:600}
+.status-strip .count{font-size:1.1rem;font-weight:600}
+.progress{flex:1 1 140px;max-width:260px;height:6px;border-radius:3px;background:#e5e7eb;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--primary)}
+.status-inline{display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:1px solid #dbe3f0;border-radius:999px;padding:3px 6px 3px 12px;font-size:.8125rem}
+.status-inline b{font-weight:600}
+.status-mini{display:flex;flex-direction:column;gap:2px;cursor:pointer;border-radius:6px;padding:6px 8px;margin:-6px -8px}
+.status-mini .row{display:flex;align-items:center;gap:8px}
+.status-mini b{font-size:.95rem;font-weight:600}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+</svg>
+
+<header class="mk-bar">
+  <span class="mk-pill">MOCKUP</span>
+  <span class="mk-title">Detalhes · «Estado da solicitação» (solo Auditoría)</span>
+  <span class="mk-label">Opción</span>
+  <div class="mk-seg" id="seg-opt"></div>
+  <span class="mk-label">Ancho</span>
+  <div class="mk-seg" id="seg-w"></div>
+  <span class="mk-label">Resaltar</span>
+  <div class="mk-seg" id="seg-hl"><button data-hl="1" aria-pressed="true">Sí</button><button data-hl="0" aria-pressed="false">No</button></div>
+</header>
+<div class="mk-notes" id="notes"></div>
+<div class="stage-wrap"><div class="stage" id="stage"></div></div>
+
+<script>
+(() => {
+'use strict';
+const icon = n => `<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const DONE = 2, TOTAL = 3;
+const LONG = 'As conciliações das contas correntes são elaboradas e aprovadas pelo mesmo analista, sem evidência de revisão por um segundo responsável. Em 6 de 25 contratos amostrados não foi localizada a documentação de suporte exigida pela norma interna, o que impede comprovar a origem dos recursos em uma eventual fiscalização.';
+
+const fields = () => `<dl class="fields">
+  <div class="full"><dt>Título</dt><dd>Conciliações bancárias sem revisão independente na Tesouraria</dd></div>
+  <div><dt>Nome do relatório</dt><dd>Auditoria de Processos de Tesouraria</dd></div>
+  <div><dt>Nº do relatório</dt><dd>014/2026</dd></div>
+  <div><dt>Tipo de ponto</dt><dd>Novo ponto</dd></div>
+  <div><dt>Classificação do risco</dt><dd><span class="risk">Baixo</span></dd></div>
+  <div><dt>Sistema impactado</dt><dd>SIM</dd></div>
+  <div><dt>Oportunidade de melhoria</dt><dd>SIM</dd></div>
+  <div><dt>Área responsável</dt><dd>BACKOFFICE</dd></div>
+  <div class="half"><dt>Responsável da área</dt><dd>JUNIOR.HOMOLOGA</dd></div>
+  <div><dt>2ª área responsável</dt><dd>COMPLIANCE E PLD-FT</dd></div>
+  <div class="half"><dt>Responsável da 2ª área</dt><dd>RICIELE.HOMOLOGA</dd></div>
+  <div><dt>Prazo</dt><dd>19/11/2026</dd></div>
+  <div class="full"><dt>Recomendação</dt><dd>Instituir a revisão independente das conciliações mensais e manter o registro da aprovação por um segundo responsável.</dd></div>
+  <div class="full"><dt>Plano de ação</dt><dd>Revisão por um segundo analista a partir de janeiro/2027, com registro da aprovação no sistema.</dd></div>
+  <div class="full"><dt>Descrição</dt><dd>${LONG}</dd></div>
+</dl>`;
+
+const link = `<span class="status-link">Ver histórico completo em Rastreamento${icon('chev')}</span>`;
+const chip = `<span class="state-chip">ATIVO</span>`;
+const cardStatus = cls => `<div class="paper status-card ${cls} hl" title="Ir para Rastreamento">
+  <p class="status-title">Estado da solicitação</p><p class="status-count">${DONE} de ${TOTAL}</p>${chip}${link}</div>`;
+const strip = `<div class="paper status-strip hl" title="Ir para Rastreamento">
+  <span class="status-title">Estado da solicitação</span><span class="count">${DONE} de ${TOTAL}</span>
+  <span class="progress"><i style="width:${DONE / TOTAL * 100}%"></i></span>${chip}<span class="spacer"></span>${link}</div>`;
+const info = (headExtra = '') => `<div class="paper info"><div class="paper-head"><p class="paper-title">Informações da operação</p>${headExtra}</div>${fields()}</div>`;
+
+const OPTIONS = {
+  Hoy: {
+    name:'Como está ahora (referencia)',
+    pros:[], cons:['El recuadro ocupa un tercio del ancho para mostrar 3 datos; los campos largos quedan apretados en dos tercios.'],
+    tab:() => `<div class="resumo">${info()}${cardStatus('side-full').replace(' hl','')}</div>`,
+  },
+  A: {
+    name:'Debajo, a todo el ancho (vuestra idea)',
+    pros:['Los campos usan todo el ancho.','Cambio de layout mínimo: el mismo recuadro, apilado.'],
+    cons:['Con muchos campos queda muy abajo; hay que hacer scroll para verlo.','Un recuadro alto y casi vacío a todo el ancho.'],
+    tab:() => `<div class="resumo vertical">${info()}${cardStatus('')}</div>`,
+  },
+  B: {
+    name:'Franja compacta arriba de los campos',
+    pros:['Siempre visible al abrir la pestaña, sin scroll.','Ocupa una sola línea; suma una barra de progreso que se lee de un vistazo.','Los campos usan todo el ancho.'],
+    cons:['Agrega una franja más entre las pestañas y los datos.'],
+    tab:() => `<div class="resumo vertical">${strip}${info()}</div>`,
+  },
+  C: {
+    name:'Franja compacta debajo de los campos',
+    pros:['Como B, pero no se interpone antes de los datos.','Los campos usan todo el ancho.'],
+    cons:['Con muchos campos queda fuera de la vista inicial (igual que A, pero ocupando menos).'],
+    tab:() => `<div class="resumo vertical">${info()}${strip}</div>`,
+  },
+  D: {
+    name:'Dentro del título de «Informações da operação»',
+    pros:['No ocupa espacio propio: comparte la línea del título de la tarjeta.','Los campos usan todo el ancho.'],
+    cons:['Más discreto: puede pasar desapercibido.','Mezcla dos tarjetas que hoy son distintas.'],
+    tab:() => `<div class="resumo vertical">${info(`<span class="status-inline hl" title="Ir para Rastreamento">Estado da solicitação: <b>${DONE} de ${TOTAL}</b>${chip}${link}</span>`)}</div>`,
+  },
+  E: {
+    name:'Columna angosta al costado (achicar)',
+    pros:['Mantiene la disposición actual que el usuario ya conoce.','Libera ancho para los campos sin moverlo.'],
+    cons:['Libera menos espacio que las opciones apiladas.','En pantallas chicas igual aprieta.'],
+    tab:() => `<div class="resumo">${info()}${cardStatus('side-narrow')}</div>`,
+  },
+  F: {
+    name:'Al encabezado, columna derecha (sale de la pestaña)',
+    pros:['Los campos usan todo el ancho.','Visible en las dos pestañas (Detalhes y Rastreamento).','Aprovecha el espacio libre bajo «Área».'],
+    cons:['Agrega un dato más al encabezado.','En Rastreamento el link quedaría redundante (se puede ocultar ahí).'],
+    tab:() => `<div class="resumo vertical">${info()}</div>`,
+    headerExtra:`<div class="kv hl status-mini" title="Ir para Rastreamento"><span>Estado da solicitação</span><div class="row"><b>${DONE} de ${TOTAL}</b>${chip}</div>${link}</div>`,
+  },
+};
+const WIDTHS = { '1366 px':1100, '1920 px':1500 };
+let opt = 'B', width = '1366 px', hl = true;
+
+function render() {
+  const o = OPTIONS[opt];
+  document.body.classList.toggle('hl-off', !hl);
+  document.getElementById('stage').style.width = WIDTHS[width] + 'px';
+  document.getElementById('stage').innerHTML = `<div class="detail">
+    <div class="dh"><button class="icon-btn lg">${icon('x')}</button><button class="icon-btn">${icon('refresh')}</button><span class="spacer"></span>
+      <button class="btn">${icon('file')}Ver documentos</button><button class="btn btn-contained">Ações da tarefa</button></div>
+    <div class="summary">
+      <div class="summary-main"><div class="task-box">${icon('pen')}</div><div style="min-width:0">
+        <h2>Conciliações bancárias sem revisão independente na Tesouraria ${chip}</h2>
+        <p class="summary-sub">Gestão Auditoria › Apontamentos de Auditoria</p>
+        <p class="summary-op"># OP-02-02-261118-00003</p>
+        <span class="task-chip">${icon('pen')}Encaminhamento para Área Responsável</span><br>
+        <span class="due-banner">${icon('cal')}Vencimento: 19/11/2026 <small>(Vence em 1 dia)</small></span>
+      </div></div>
+      <div class="summary-side">
+        <div class="kv"><span>Solicitante</span><b>carlos.homologa</b></div>
+        <div class="kv"><span>Data de criação</span><b>18/11/2026 09:34</b></div>
+        <div class="kv"><span>Área</span><b>AUDITORIA INTERNA</b></div>
+        ${o.headerExtra ?? ''}
+      </div>
+    </div>
+    <div class="tab-list"><button class="tab" aria-selected="true">Detalhes</button><button class="tab" aria-selected="false">Rastreamento</button></div>
+    <div class="panel">${o.tab()}</div>
+  </div>`;
+  document.getElementById('notes').innerHTML = `<h2>${opt} · ${o.name}</h2><div class="pc">
+    <div>${o.pros.map(p => `<span class="pro">${p}</span>`).join('') || '<span>—</span>'}</div>
+    <div>${o.cons.map(p => `<span class="con">${p}</span>`).join('')}</div></div>
+    <p style="margin-top:6px;color:#7c6f2c;font-size:12px">En todas: el clic sobre el estado sigue llevando a Rastreamento. Cambiá «Ancho» para ver cómo queda en una notebook de 1366 px.</p>`;
+  document.getElementById('seg-opt').innerHTML = Object.keys(OPTIONS).map(k => `<button data-opt="${k}" aria-pressed="${k === opt}" title="${OPTIONS[k].name}">${k}</button>`).join('');
+  document.getElementById('seg-w').innerHTML = Object.keys(WIDTHS).map(k => `<button data-w="${k}" aria-pressed="${k === width}">${k}</button>`).join('');
+  document.querySelectorAll('#seg-hl button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.hl === '1') === hl)));
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-opt],button[data-w],button[data-hl]');
+  if (!b) return;
+  if (b.dataset.opt) opt = b.dataset.opt;
+  if (b.dataset.w) width = b.dataset.w;
+  if (b.dataset.hl) hl = b.dataset.hl === '1';
+  render();
+});
+render();
+})();
+</script>
+</body>
+</html>
